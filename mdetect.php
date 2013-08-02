@@ -3,6 +3,10 @@
 /* *******************************************
 // Copyright 2010-2013, Anthony Hand
 //
+// File version 2013.08.01 (August 1, 2013)
+//	Updates:
+//	- Updated DetectMobileQuick(). Moved the 'Exclude Tablets' logic to the top of the method to fix a logic bug.
+//
 // File version 2013.07.13 (July 13, 2013)
 //	Updates:
 //	- Added support for Tizen: variable and DetectTizen().
@@ -934,14 +938,14 @@ class uagent_info
    //   as well as smartphone-class devices. Excludes Apple iPads and other modern tablets.
    function DetectMobileQuick()
    {
-      if ($this->initCompleted == $this->true ||
-          $this->isMobilePhone == $this->true)
-         return $this->isMobilePhone;
-
       //Let's exclude tablets
       if ($this->isTierTablet == $this->true) 
          return $this->false;
       
+      if ($this->initCompleted == $this->true ||
+          $this->isMobilePhone == $this->true)
+         return $this->isMobilePhone;
+
       //Most mobile browsing is done on smartphones
       if ($this->DetectSmartphone() == $this->true) 
          return $this->true;
